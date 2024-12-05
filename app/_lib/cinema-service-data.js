@@ -28,3 +28,17 @@ export async function getMovieData(id) {
     throw new Error(err.message);
   }
 }
+
+export async function getMovies() {
+  try {
+    const { data, error } = await supabase.from("Movies").select("*");
+
+    if (error) {
+      throw new Error({ message: error.message });
+    }
+
+    return data;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}

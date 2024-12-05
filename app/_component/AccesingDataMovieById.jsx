@@ -18,7 +18,6 @@ function AccesingDataMovieById() {
     <div>
       <h1>Check your movie by id</h1>
 
-      {/* Display input and button only if showInput is true */}
       {showInput && (
         <form>
           <label>Movie you want</label>
