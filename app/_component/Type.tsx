@@ -7,7 +7,7 @@ export type Movie = {
   image: string;
   trailer: string;
   description: string;
-  realeaseDate: string;
+  releaseDate: string;
 };
 
 export type PageProps = {
