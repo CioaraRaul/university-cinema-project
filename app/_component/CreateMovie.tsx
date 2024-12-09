@@ -24,7 +24,7 @@ export default function CreateMovieForm() {
     image: "",
     trailer: "",
     description: "",
-    realeaseDate: "",
+    releaseDate: "",
   });
 
   async function handleSubmit(e: React.FormEvent) {
@@ -34,7 +34,7 @@ export default function CreateMovieForm() {
       cinemaId: inputRefCinemaId.current?.value
         ? parseInt(inputRefCinemaId.current?.value)
         : 0,
-      title: inputRefCinemaId.current?.value || "",
+      title: inputRefTitle.current?.value || "",
       genre: inputRefGenre.current?.value || "",
       duration: inputRefDuration.current?.value
         ? parseFloat(inputRefDuration.current?.value)
@@ -58,7 +58,7 @@ export default function CreateMovieForm() {
     //   body: JSON.stringify(movie),
     // });
 
-    await supabase.from("Movies").insert(newMovie);
+    await supabase.from("Movies").insert(newMovie).single();
 
     // if (response.ok) {
     //   const result = await response.json();

@@ -1,4 +1,5 @@
 import AccesingDataMovieById from "../_component/accesingDataMovieById";
+import CreateMovieForm from "../_component/CreateMovie";
 import ListMovies from "../_component/ListMovies";
 
 function page() {
@@ -6,6 +7,7 @@ function page() {
     <div>
       <ListMovies />
       <AccesingDataMovieById />
+      <CreateMovieForm />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 export type Movie = {
+  id?: number;
   cinemaId: number;
   title: string;
   genre: string;
