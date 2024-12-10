@@ -62,3 +62,37 @@ export async function deleteMovie(id) {
     throw new Error(err.message);
   }
 }
+
+export async function ChangeMovieData(movieData) {
+  try {
+    console.log(movieData);
+    const { cinemaId, ...updatedData } = movieData;
+
+    const fieldsToUpdate = Object.fromEntries(
+      Object.entries(updatedData).filter(
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        ([_, value]) => value !== null && value !== ""
+      )
+    );
+
+    if (Object.keys(fieldsToUpdate).length === 0) {
+      throw new Error("No changes");
+    }
+
+    const { data, error } = await supabase
+      .from("Movies")
+      .update(fieldsToUpdate)
+      .eq("cinemaId", cinemaId);
+
+    if (!data) {
+      throw new Error(error);
+    }
+    if (error) {
+      console.error(error.message);
+    }
+
+    return data;
+  } catch (err) {
+    console.error({ message: err });
+  }
+}
