@@ -1,5 +1,11 @@
+import "../app/_styles/globals.css";
+
 export const metadata = {
-  title: "FilmFusion",
+  // title: "The Wild Oasis",
+  title: {
+    template: "%s / FilmFussion",
+    default: "Welcome / FilmFussion",
+  },
   description: "Your ultimate movie experience",
 };
 

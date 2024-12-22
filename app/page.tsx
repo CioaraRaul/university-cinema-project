@@ -1,10 +1,10 @@
 import React from "react";
-import "./global.css";
+import { StyledTest } from "./_component/StyledComponents";
 
 export default function page() {
   return (
     <div>
-      <h1>Home</h1>
+      <StyledTest>Home</StyledTest>
     </div>
   );
 }

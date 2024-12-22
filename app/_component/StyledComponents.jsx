@@ -3,22 +3,55 @@
 import styled from "styled-components";
 
 export const StyledButtonLogin = styled.button`
-  background-color: green;
+  background-color: #22c55e;
   color: white;
-  padding: 1.2rem 3.2rem;
+  padding: 1rem 3.2rem;
   cursor: pointer;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   border: none;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   width: 24rem;
+  transition: 0.3s all;
+  margin-bottom: 1.2rem;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 export const StyledDivLogin = styled.div`
-  height: 95vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0.8rem;
-  background-image: url("../..//loginBackground.jpg");
+  background-image: url("@../../loginBackground.jpg");
+  background-size: cover;
+`;
+
+export const StyledH1Login = styled.h1`
+  color: white;
+  font-size: 3.2rem;
+  letter-spacing: 0.05rem;
+  transition: 3s all;
+`;
+
+export const StyledInputLogin = styled.input`
+  width: 32rem;
+  padding: 0.8rem 1.2rem;
+  background-color: rgb(55 65 81);
+  border: none;
+  border-radius: 0.5rem;
+  color: #22c55e;
+  transition: all 0.3s;
+  &:focus {
+    outline: 0.15rem solid #22c55e;
+    outline-offset: 0.1rem;
+    transform: scale(1.05);
+  }
+`;
+
+export const StyledTest = styled.h1`
+  color: wheat;
 `;
