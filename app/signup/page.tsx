@@ -10,7 +10,7 @@ export default function SignUp() {
   return (
     <StyledDivLogin>
       <StyledH1Login className="mb-6">
-        <span className="text-green-500 text-6xl tracking-wide">Film</span>
+        <span className="text-greenMain text-6xl tracking-wide">Film</span>
         Fussion
       </StyledH1Login>
       <Link href={"/signup"}>
@@ -37,7 +37,7 @@ export default function SignUp() {
           </button>
         </Link>
       </div>
-      <button className="text-white bg-green-600 px-16 py-4 rounded-2xl mt-6">
+      <button className="text-white bg-greenMain px-16 py-4 rounded-2xl mt-6">
         Sign In
       </button>
     </StyledDivLogin>

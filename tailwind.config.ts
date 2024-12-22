@@ -11,9 +11,18 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        greenMain: "#22c55e",
       },
       width: {
         "32rem": "32rem",
+        "create-account-width": "38rem",
+      },
+      backgroundImage: {
+        "create-account": "url('/loginBackground.jpg')",
+        homepage: "url('/backgroundHome.jpg')",
+      },
+      padding: {
+        "1/2": "30vh",
       },
     },
   },
