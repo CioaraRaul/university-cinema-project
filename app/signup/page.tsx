@@ -37,9 +37,12 @@ export default function SignUp() {
           </button>
         </Link>
       </div>
-      <button className="text-white bg-greenMain px-16 py-4 rounded-2xl mt-6">
+      <Link
+        href={"/homepage"}
+        className="text-white bg-greenMain px-16 py-4 rounded-2xl mt-6"
+      >
         Sign In
-      </button>
+      </Link>
     </StyledDivLogin>
   );
 }

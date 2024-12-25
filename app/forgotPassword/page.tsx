@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export default function Page() {
@@ -38,12 +39,25 @@ export default function Page() {
           <input
             type="email"
             placeholder="Enter your valid email"
-            className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-greenMain"
+            className="text-black w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-greenMain"
           />
         </div>
-        <button className="px-6 py-3 rounded-lg bg-greenMain text-white transition-all duration-300 hover:scale-105 active:scale-105">
+        <div className="w-full max-w-sm mb-6">
+          <label className="block text-md font-semibold mb-2">
+            New Password
+          </label>
+          <input
+            type="password"
+            placeholder="Enter your password"
+            className="text-black w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-greenMain"
+          />
+        </div>
+        <Link
+          href={"/homepage"}
+          className="px-6 py-3 rounded-lg bg-greenMain text-white transition-all duration-300 hover:scale-105 active:scale-105"
+        >
           Reset password
-        </button>
+        </Link>
       </div>
     </div>
   );

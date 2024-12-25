@@ -55,3 +55,19 @@ export const StyledInputLogin = styled.input`
 export const StyledTest = styled.h1`
   color: wheat;
 `;
+
+export const StyledHomepageH3 = styled.h3`
+  color: #e5e7eb;
+  font-size: 1.2rem;
+  letter-spacing: 1.1px;
+  font-weight: 200;
+`;
+
+export const StyledHomeDiv = styled.div`
+  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  gap: 1rem;
+`;

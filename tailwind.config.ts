@@ -20,6 +20,9 @@ export default {
       backgroundImage: {
         "create-account": "url('/loginBackground.jpg')",
         homepage: "url('/backgroundHome.jpg')",
+        witcher: "url('/home.jpg')",
+        fast9: "url('/fast9.jpg')",
+        badboys: "url('/badboys.jpg')",
       },
       padding: {
         "1/2": "30vh",
