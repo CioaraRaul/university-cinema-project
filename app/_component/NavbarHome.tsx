@@ -48,13 +48,31 @@ function NavbarHome({ image, username, password, email }: NavBarHomeProps) {
             <Link href={"/homepage"}>Home</Link>
           </li>
           <li className="text-xl tracking-wide">
-            <Link href={"/movies"}>Movies</Link>
+            <Link
+              href={`/homepage/movies?username=${username}&email=${email}&password=${password}&image=${
+                image || "default-profile-picture.png"
+              }`}
+            >
+              Movies
+            </Link>
           </li>
           <li className="text-xl tracking-wide">
-            <Link href={"/series"}>Series</Link>
+            <Link
+              href={`/homepage/series?username=${username}&email=${email}&password=${password}&image=${
+                image || "default-profile-picture.png"
+              }`}
+            >
+              Series
+            </Link>
           </li>
           <li className="text-xl tracking-wide">
-            <Link href={"/mylist"}> My List</Link>
+            <Link
+              href={`/homepage/mylist?username=${username}&email=${email}&password=${password}&image=${
+                image || "default-profile-picture.png"
+              }`}
+            >
+              My List
+            </Link>
           </li>
         </ul>
       </div>
