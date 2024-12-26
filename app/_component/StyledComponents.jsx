@@ -76,6 +76,6 @@ export const StyledMovieH3 = styled.h3`
   color: #d4d1d1;
 
   &.active {
-    color: red;
+    color: #15803d;
   }
 `;

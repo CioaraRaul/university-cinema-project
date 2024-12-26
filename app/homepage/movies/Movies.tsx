@@ -1,7 +1,9 @@
 "use client";
 
 import { StyledMovieH3 } from "@/app/_component/StyledComponents";
+import Image from "next/image";
 import Link from "next/link";
+import { relative } from "path";
 import React, { useEffect, useState } from "react";
 
 export default function Movies() {
@@ -27,7 +29,7 @@ export default function Movies() {
   };
 
   return (
-    <div className="bg-gray-800 h-screen grid grid-cols-[20%_80%]">
+    <div className="bg-gray-800 h-full grid grid-cols-[20%_80%]">
       <div>
         <div className="relative ">
           <Link
@@ -81,11 +83,899 @@ export default function Movies() {
           </StyledMovieH3>
         </div>
       </div>
-      <div>
-        <div id="new-releases">New releases</div>
-        <div id="trending">Trending</div>
-        <div id="coming-soon">Coming soon</div>
-        <div id="watch-later">Watch later</div>
+      <div className="p-6">
+        <div id="new-releases">
+          <h2 className="mb-12 text-3xl text-gray-300 tracking-wider">
+            New releases
+          </h2>
+          <div className="grid grid-cols-5 gap-y-12">
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="trending">
+          <h2 className="mb-12 mt-8 text-3xl text-gray-300 tracking-wider">
+            New releases
+          </h2>
+          <div className="grid grid-cols-5 gap-y-12">
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="coming-soon">
+          <h2 className="mb-12 mt-8 text-3xl text-gray-300 tracking-wider">
+            New releases
+          </h2>
+          <div className="grid grid-cols-5 gap-y-12">
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="watch-later">
+          <h2 className="mb-12 mt-8 text-3xl text-gray-300 tracking-wider">
+            New releases
+          </h2>
+          <div className="grid grid-cols-5 gap-y-12">
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+            <div>
+              <div style={{ position: "relative", width: 200, height: 300 }}>
+                <Image
+                  src="/fast9.jpg"
+                  alt="movie"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                    zIndex: 1,
+                  }}
+                ></div>
+                <h3
+                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                  style={{
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  8.9
+                </h3>
+              </div>
+              <div className="relative mt-6">
+                <h3 className="text-gray-100 tracking-wide text-lg">
+                  Title movie
+                </h3>
+                <h6 className="text-gray-300 mt-1">Genre</h6>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
