@@ -1,5 +1,10 @@
 import React from "react";
+import Movies from "../movies/Movies";
 
 export default function page() {
-  return <div>page</div>;
+  return (
+    <div>
+      <Movies />
+    </div>
+  );
 }

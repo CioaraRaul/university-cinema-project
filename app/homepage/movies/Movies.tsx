@@ -83,7 +83,9 @@ export default function Movies() {
           </StyledMovieH3>
         </div>
       </div>
-      <div className="p-6">
+      <div className="p-6  relative">
+        {" "}
+        <div className="absolute bg-chicago inset-0 bg-center bg-cover blur-md opacity-50"></div>
         <div id="new-releases">
           <h2 className="mb-12 text-3xl text-gray-300 tracking-wider">
             New releases

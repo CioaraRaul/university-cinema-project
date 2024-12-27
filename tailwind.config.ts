@@ -23,6 +23,7 @@ export default {
         witcher: "url('/home.jpg')",
         fast9: "url('/fast9.jpg')",
         badboys: "url('/badboys.jpg')",
+        chicago: "url('/chicago.jpg')",
       },
       padding: {
         "1/2": "30vh",
