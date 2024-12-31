@@ -4,6 +4,7 @@ import Link from "next/link";
 import SearchBar from "./SearchBar";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface NavBarHomeProps {
   image?: string;
@@ -13,29 +14,7 @@ interface NavBarHomeProps {
 }
 
 function NavbarHome({ image, username, password, email }: NavBarHomeProps) {
-  const [dropDownOpen, setDropDownOpen] = useState(false);
   const dropDownRef = useRef<HTMLDivElement | null>(null);
-
-  const toggleDropDown = () => {
-    setDropDownOpen((prev) => !prev);
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropDownRef.current &&
-        !dropDownRef.current.contains(event.target as Node)
-      ) {
-        console.log(dropDownRef.current);
-        setDropDownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   return (
     <div className="relative z-10 flex justify-around items-center pt-6">
@@ -83,42 +62,24 @@ function NavbarHome({ image, username, password, email }: NavBarHomeProps) {
           ref={dropDownRef}
         >
           {image && (
-            <Image
-              src={image}
-              width={48}
-              height={48}
-              onClick={toggleDropDown}
-              className="cursor-pointer"
-              alt={`${username}'s profile `}
-              onError={(e) =>
-                (e.currentTarget.src = "/default-profile-picture.png")
-              }
-            />
+            <Link
+              href={`/homepage/settings?username=${username}&email=${email}&password=${password}&image=${
+                image || "default-profile-picture.png"
+              }`}
+            >
+              <Image
+                src={image}
+                width={48}
+                height={48}
+                className="cursor-pointer"
+                alt={`${username}'s profile `}
+                onError={(e) =>
+                  (e.currentTarget.src = "/default-profile-picture.png")
+                }
+              />
+            </Link>
           )}
           {username && <h3>{username}</h3>}
-          <div className="flex h-full">
-            <Image
-              src="/arrowDown.svg"
-              alt="arrow down"
-              className="cursor-pointer relative "
-              width={32}
-              height={32}
-              onClick={toggleDropDown}
-            />
-
-            {dropDownOpen && (
-              <div className="absolute left-0 mt-2 top-14 bg-white text-black rounded-lg shadow-lg p-4 w-48">
-                <ul>
-                  <li className="py-2">
-                    <Link href={"/settings"}>Settings</Link>
-                  </li>
-                  <li className="py-2">
-                    <Link href={"/logout"}>Logout</Link>
-                  </li>
-                </ul>
-              </div>
-            )}
-          </div>
         </div>
       </div>
     </div>

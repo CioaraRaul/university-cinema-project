@@ -28,6 +28,9 @@ export default {
       padding: {
         "1/2": "30vh",
       },
+      zIndex: {
+        "100": "100",
+      },
     },
   },
   plugins: [],

@@ -2,7 +2,6 @@
 
 import React from "react";
 import cinemaSecondImage from "@/public/cinemaSecondImage.jpg";
-import CarouselImage from "@/app/_component/CarouselImage";
 import backgroundHome from "@/public/backgroundHome.jpg";
 import loginBackground from "@/public/loginBackground.jpg";
 import SearchBar from "@/app/_component/SearchBar";

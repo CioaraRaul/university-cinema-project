@@ -6,9 +6,9 @@ import InstagramSVG from "@/public/instagram-svgrepo-com.svg";
 import FacebookSVG from "@/public/facebook-svgrepo-com.svg";
 import LinkedinSVG from "@/public/linkedin-svgrepo-com.svg";
 import Link from "next/link";
-import CarouselImage from "./_component/CarouselImage";
 import backgroundHome from "@/public/backgroundHome.jpg";
 import loginBackground from "@/public/loginBackground.jpg";
+import CarouselImage from "./_component/CarouselImage";
 
 const images = [
   { cinemaId: 1, src: cinemaSecondImage },
@@ -42,7 +42,7 @@ export default function page() {
           <div className="text-white">
             <nav className="flex flex-row gap-6 text-xl ">
               <Link
-                className="transition-all duration-300 ease-in-out hover:scale-110 hover:text-green-300 hover:font-semibold "
+                className="transition-all duration-300 ease-in-out hover:scale-110 hover:text-green-300 hover:font-semibold focus:text-green-300 focus:font-semibold"
                 href={"/"}
               >
                 Home
