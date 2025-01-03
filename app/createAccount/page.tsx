@@ -213,12 +213,17 @@ export default function Page() {
             <input
               type="text"
               placeholder="username:Test12"
-              className="rounded-3xl border-none text-white bg-gray-600 placeholder-white transition-all duration-300 px-3 py-5 focus:outline-2 outline-offset-2 outline-greenMain focus:scale-x-105"
+              className="rounded-3xl border-none text-white bg-gray-600 placeholder-white transition-all duration-300 px-3 py-4 focus:outline-2 outline-offset-2 outline-greenMain focus:scale-x-105"
               required
               ref={usernameRef}
-            />
+            />{" "}
+            {errorMessageUsername && (
+              <p className="text-red-500 mt-1 text-sm">
+                {errorMessageUsername}
+              </p>
+            )}
             <input
-              className="rounded-3xl border-none text-white bg-gray-600 placeholder-white transition-all duration-300 px-3 py-5 focus:outline-2 outline-offset-2 outline-greenMain focus:scale-x-105"
+              className="rounded-3xl border-none text-white bg-gray-600 placeholder-white transition-all duration-300 px-3 py-4 focus:outline-2 outline-offset-2 outline-greenMain focus:scale-x-105"
               type="text"
               required
               placeholder="email:test@test.com"
@@ -228,19 +233,27 @@ export default function Page() {
               <p className="text-red-500 mt-1 text-sm">{errorMessageEmail}</p>
             )}
             <input
-              className="rounded-3xl border-none text-white bg-gray-600 placeholder-white transition-all duration-300 px-3 py-5 focus:outline-2 outline-offset-2 outline-greenMain focus:scale-x-105"
+              className="rounded-3xl border-none text-white bg-gray-600 placeholder-white transition-all duration-300 px-3 py-4 focus:outline-2 outline-offset-2 outline-greenMain focus:scale-x-105"
               type="password"
               placeholder="password:test1."
               required
               ref={passwordRef}
             />
+            {errorMessagePassword && (
+              <p className="text-red-500 mt-1 text-sm">
+                {errorMessagePassword}
+              </p>
+            )}
             <input
               type="number"
               placeholder="age: 21"
-              className="rounded-3xl border-none text-white bg-gray-600 placeholder-white transition-all duration-300 px-3 py-5 focus:outline-2 outline-offset-2 outline-greenMain focus:scale-x-105"
+              className="rounded-3xl border-none text-white bg-gray-600 placeholder-white transition-all duration-300 px-3 py-4 focus:outline-2 outline-offset-2 outline-greenMain focus:scale-x-105"
               required
               ref={ageRef}
             />
+            {errorMessageAge && (
+              <p className="text-red-500 mt-1 text-sm">{errorMessageAge}</p>
+            )}
           </div>
           <div className="mt-10">
             <button
@@ -250,7 +263,7 @@ export default function Page() {
               Create Account
             </button>
             {error && (
-              <p className="text-red-500 mt-4">
+              <p className="text-red-500 mt-4 mb-8">
                 Check all fields to be completely formed
               </p>
             )}
