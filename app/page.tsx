@@ -149,7 +149,7 @@ export default function page() {
               />
             </div>
           </div>
-          <CarouselImage images={images} />
+          <CarouselImage />
 
           <div className="border-t-2 border-gray-300 my-24 w-1/2 mx-auto"></div>
           <div>

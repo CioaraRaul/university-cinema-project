@@ -16,3 +16,23 @@ export type PageProps = {
     id: number;
   };
 };
+
+export type UserSignUP = {
+  email?: string;
+  password?: string;
+};
+
+export type Users = {
+  id?: number;
+  email?: string;
+  password?: string;
+  username?: string;
+  age?: number;
+};
+
+export interface Approve {
+  approveEmail: boolean;
+  approvePassword: boolean;
+  approveUsername: boolean;
+  approveAge: boolean;
+}

@@ -43,6 +43,19 @@ export async function getMovies() {
   }
 }
 
+export async function getUsers() {
+  try {
+    const { error, data } = await supabase.from("Users").select("*");
+    if (error) {
+      throw new Error({ message: message.error });
+    }
+
+    return data;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
 export async function deleteMovie(id) {
   try {
     const { data, error } = await supabase

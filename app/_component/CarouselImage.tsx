@@ -83,7 +83,7 @@ function CarouselImage() {
               return (
                 <div
                   key={movie.cinemaId}
-                  className={`relative w-80 h-72 ${
+                  className={`relative w-[320px] h-[400px] ${
                     isActive
                       ? "scale-90 z-20 shadow-lg hover:shadow-2xl"
                       : "scale-75 opacity-70"
