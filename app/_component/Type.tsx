@@ -6,7 +6,6 @@ export type Movie = {
   duration: number;
   rating: number;
   image: string;
-  trailer: string;
   description: string;
   releaseDate: string;
 };

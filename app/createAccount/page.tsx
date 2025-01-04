@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { CreateUser } from "../_lib/users";
 import { Approve } from "../_component/Type";
@@ -24,7 +23,7 @@ export default function Page() {
 
   const [error, setError] = useState<boolean>(false);
   const [errorMessageEmail, setErrorMessageEmail] = useState<string>("");
-  const [duplicateValues, setDuplicateValues] = useState<boolean>(false);
+
   const [errorMessagePassword, setErrorMessagePassword] = useState<string>("");
   const [errorMessageUsername, setErrorMessageUsername] = useState<string>("");
   const [errorMessageAge, setErrorMessageAge] = useState<string>("");

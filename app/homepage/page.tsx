@@ -1,5 +1,5 @@
 import NavbarHome from "@/app/_component/NavbarHome";
-import ContentHomepage from "@/app/_component/ContentHomepage";
+import ContentHomepage from "../_component/ContentHomepage";
 
 export const metadata = {
   title: "Homepage",

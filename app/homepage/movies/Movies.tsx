@@ -1,13 +1,74 @@
 "use client";
 
 import { StyledMovieH3 } from "@/app/_component/StyledComponents";
+import { Movie } from "@/app/_component/Type";
+import { getMovies } from "@/app/_lib/cinema-service-data";
 import Image from "next/image";
 import Link from "next/link";
-import { relative } from "path";
 import React, { useEffect, useState } from "react";
 
 export default function Movies() {
   const [activeSection, setActiveSection] = useState<string>("");
+  const [allMovies, setAllMovies] = useState<Movie[]>([]);
+  const [newRealaseMovies, setNewRealeaseMovies] = useState<Movie[]>([]);
+  const [highestRated, setHighestRated] = useState<Movie[]>([]);
+  const [comingSoonMovies, setComingSoonMovies] = useState<Movie[]>([]);
+  const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
+
+  const yearDate = new Date().getFullYear();
+  const monthDate = String(new Date().getMonth() + 1).padStart(2, "0");
+  const dayDate = String(new Date().getDate()).padStart(2, "0");
+  const currentDate = `${yearDate}-${monthDate}-${dayDate}`;
+
+  useEffect(() => {
+    async function fetchMoveis() {
+      try {
+        const data = await getMovies();
+
+        if (data.length > 0) {
+          setAllMovies(data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchMoveis();
+  }, []);
+
+  useEffect(() => {
+    const newReleases: Movie[] = allMovies.filter((movie) => {
+      const releaseDate = new Date(movie.releaseDate); // Convert to Date object
+      const currentDateObj = new Date(currentDate); // Convert currentDate string to Date object
+
+      // Calculate the difference in days
+      const timeDifference = currentDateObj.getTime() - releaseDate.getTime();
+      const dayDifference = timeDifference / (1000 * 60 * 60 * 24); // Convert milliseconds to days
+
+      return dayDifference <= 90 && releaseDate <= currentDateObj; // Keep movies released in the last 90 days
+    });
+
+    console.log(newReleases);
+    setNewRealeaseMovies(newReleases); // Update the state with the filtered array
+  }, [allMovies, currentDate]);
+
+  useEffect(() => {
+    const tenHighestRated: Movie[] = [...allMovies] // Create a copy to avoid mutating the original array
+      .sort((a, b) => b.rating - a.rating) // Sort by rating in descending order
+      .slice(0, 10); // Take the top 10 movies
+
+    console.log(tenHighestRated); // Log the top 10 highest-rated movies
+    setHighestRated(tenHighestRated);
+  }, [allMovies]);
+
+  useEffect(() => {
+    const comingSoon: Movie[] = allMovies.filter((movie) => {
+      const releaseDate = new Date(movie.releaseDate); // Convert to Date object
+      const currentDateObj = new Date(currentDate); // Convert currentDate string to Date object
+
+      return releaseDate >= currentDateObj;
+    });
+    setComingSoonMovies(comingSoon);
+  }, [allMovies, currentDate]);
 
   const handleHashChange = () => {
     setActiveSection(window.location.hash);
@@ -55,10 +116,10 @@ export default function Movies() {
             className={activeSection === "#trending" ? "active" : ""}
           >
             <Link
-              href={"#trending"}
-              onClick={() => handleLinkClick("#trending")}
+              href={"#highest-rated"}
+              onClick={() => handleLinkClick("#highest-rated")}
             >
-              Trending
+              Highest rated
             </Link>
           </StyledMovieH3>
           <StyledMovieH3
@@ -71,14 +132,9 @@ export default function Movies() {
               Coming Soon
             </Link>
           </StyledMovieH3>
-          <StyledMovieH3
-            className={activeSection === "#watch-later" ? "active" : ""}
-          >
-            <Link
-              href={"#watch-later"}
-              onClick={() => handleLinkClick("#watch-later")}
-            >
-              Watch Later
+          <StyledMovieH3 className={activeSection === "#genre" ? "active" : ""}>
+            <Link href={"#genre"} onClick={() => handleLinkClick("#genre")}>
+              Select genre
             </Link>
           </StyledMovieH3>
         </div>
@@ -86,860 +142,279 @@ export default function Movies() {
       <div className="p-6  relative">
         {" "}
         <div className="absolute bg-chicago inset-0 bg-center bg-cover blur-md opacity-50"></div>
-        <div id="new-releases">
-          <h2 className="mb-12 text-3xl text-gray-300 tracking-wider">
-            New releases
+        <div id="all">
+          <h2 className="mb-12 mt-8 text-3xl text-gray-300 tracking-wider">
+            All movies
           </h2>
-          <div className="grid grid-cols-5 gap-y-12">
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
+          <div className="grid grid-cols-5 gap-y-20 hover:cursor-pointer">
+            {allMovies.length > 0 &&
+              allMovies.map((movie) => (
+                <div key={movie.id}>
+                  <div
+                    style={{ position: "relative", width: 200, height: 300 }}
+                  >
+                    <Image
+                      src={movie.image}
+                      alt={movie.title}
+                      fill
+                      style={{ objectFit: "cover" }}
+                    />
+                    {movie.rating && (
+                      <div
+                        style={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          width: "100%",
+                          height: "100%",
+                          backgroundColor: "rgba(0, 0, 0, 0.25)",
+                          zIndex: 1,
+                        }}
+                      ></div>
+                    )}
+
+                    {!movie.rating && (
+                      <div
+                        style={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          width: "100%",
+                          height: "100%",
+                          backgroundColor: "rgba(0, 0, 0, 0.75)",
+                          zIndex: 1,
+                        }}
+                      ></div>
+                    )}
+
+                    {movie.rating && (
+                      <h3
+                        className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                        style={{
+                          left: "50%",
+                          transform: "translate(-50%, -50%)",
+                        }}
+                      >
+                        {movie.rating}
+                      </h3>
+                    )}
+                    {!movie.rating && (
+                      <h3
+                        className="absolute py-4 px-4 bg-slate-700 rounded-3xl left-1/2 top-1/2 text-gray-50 z-10 w-3/4"
+                        style={{
+                          left: "50%",
+                          top: "50%",
+                          transform: "translate(-50%, -50%)",
+                        }}
+                      >
+                        Comming soon
+                      </h3>
+                    )}
+                  </div>
+                  <div className="relative mt-6">
+                    <h3 className="text-gray-100 tracking-wide text-lg">
+                      {movie.title}
+                    </h3>
+                    <h6 className="text-gray-300 mt-1">{movie.genre}</h6>
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
-        <div id="trending">
+        <div id="new-releases" className="mt-12">
+          <h2 className="mb-12 text-3xl text-gray-300 tracking-wider">
+            New releases (3 months range)
+          </h2>
+          <div className="grid grid-cols-5 gap-y-12 hover:cursor-pointer">
+            {newRealaseMovies.length > 0 &&
+              newRealaseMovies.map((newMovieRealease) => (
+                <div key={newMovieRealease.id}>
+                  <div
+                    style={{ position: "relative", width: 200, height: 300 }}
+                  >
+                    <Image
+                      src={newMovieRealease.image}
+                      alt={newMovieRealease.title}
+                      fill
+                      style={{ objectFit: "cover" }}
+                    />
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        backgroundColor: "rgba(0, 0, 0, 0.25)",
+                        zIndex: 1,
+                      }}
+                    ></div>
+                    <h3
+                      className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                      style={{
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                      }}
+                    >
+                      {newMovieRealease.rating}
+                    </h3>
+                  </div>
+                  <div className="relative mt-6">
+                    <h3 className="text-gray-100 tracking-wide text-lg">
+                      {newMovieRealease.title}
+                    </h3>
+                    <h6 className="text-gray-300 mt-1">
+                      {newMovieRealease.genre}
+                    </h6>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </div>
+        <div id="highest-rated">
           <h2 className="mb-12 mt-8 text-3xl text-gray-300 tracking-wider">
-            New releases
+            10 highest rated movies
           </h2>
           <div className="grid grid-cols-5 gap-y-12">
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
+            {highestRated.length > 0 &&
+              highestRated.map((movie) => (
+                <div key={movie.id}>
+                  <div
+                    style={{ position: "relative", width: 200, height: 300 }}
+                  >
+                    <Image
+                      src={movie.image}
+                      alt={movie.title}
+                      fill
+                      style={{ objectFit: "cover" }}
+                    />
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        backgroundColor: "rgba(0, 0, 0, 0.25)",
+                        zIndex: 1,
+                      }}
+                    ></div>
+                    <h3
+                      className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                      style={{
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                      }}
+                    >
+                      {movie.rating}
+                    </h3>
+                  </div>
+                  <div className="relative mt-6">
+                    <h3 className="text-gray-100 tracking-wide text-lg">
+                      {movie.title}
+                    </h3>
+                    <h6 className="text-gray-300 mt-1">{movie.genre}</h6>
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
         <div id="coming-soon">
           <h2 className="mb-12 mt-8 text-3xl text-gray-300 tracking-wider">
-            New releases
+            Coming soon
           </h2>
           <div className="grid grid-cols-5 gap-y-12">
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
+            {comingSoonMovies.length > 0 &&
+              comingSoonMovies.map((movie) => (
+                <div key={movie.id}>
+                  <div
+                    style={{ position: "relative", width: 200, height: 300 }}
+                  >
+                    <Image
+                      src={movie.image}
+                      alt={movie.title}
+                      fill
+                      style={{ objectFit: "cover" }}
+                    />
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        backgroundColor: "rgba(0, 0, 0, 0.25)",
+                        zIndex: 1,
+                      }}
+                    ></div>
+                    <h3
+                      className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
+                      style={{
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                      }}
+                    >
+                      Coming
+                    </h3>
+                  </div>
+                  <div className="relative mt-6">
+                    <h3 className="text-gray-100 tracking-wide text-lg">
+                      {movie.title}
+                    </h3>
+                    <h6 className="text-gray-300 mt-1">{movie.genre}</h6>
+                    <h6 className="text-gray-300 mt-1">{movie.releaseDate}</h6>
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
-        <div id="watch-later">
-          <h2 className="mb-12 mt-8 text-3xl text-gray-300 tracking-wider">
-            New releases
-          </h2>
+        <div id="genre">
+          <div className="mb-16">
+            <h2 className="mb-12 mt-8 text-3xl text-gray-300 tracking-wider">
+              Select Genre
+            </h2>
+            <div className="flex flex-wrap gap-4">
+              {[
+                "Action",
+                "Drama",
+                "Comedy",
+                "Horror",
+                "Sci-Fi",
+                "Fantasy",
+                "Romance",
+                "Adventure",
+                "Thriller",
+                "Mystery",
+                "Crime",
+                "Animation",
+                "Documentary",
+                "Biography",
+                "Historical",
+                "War",
+                "Western",
+                "Musical",
+                "Sport",
+                "Family",
+                "Kids",
+                "Superhero",
+                "Psychological",
+                "Noir",
+                "Surreal",
+                "Experimental",
+                "Anthology",
+              ].map((genre) => (
+                <button
+                  key={genre}
+                  onClick={() => console.log(`Selected genre: ${genre}`)}
+                  className="z-100 px-6 py-2 bg-gray-700 text-gray-300 rounded hover:bg-green-600 hover:text-white hover:cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
+                >
+                  {genre}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="grid grid-cols-5 gap-y-12">
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
-            <div>
-              <div style={{ position: "relative", width: 200, height: 300 }}>
-                <Image
-                  src="/fast9.jpg"
-                  alt="movie"
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.25)",
-                    zIndex: 1,
-                  }}
-                ></div>
-                <h3
-                  className="absolute py-1 px-4 bg-green-500 rounded-3xl left-1/2 text-gray-100 z-10"
-                  style={{
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  8.9
-                </h3>
-              </div>
-              <div className="relative mt-6">
-                <h3 className="text-gray-100 tracking-wide text-lg">
-                  Title movie
-                </h3>
-                <h6 className="text-gray-300 mt-1">Genre</h6>
-              </div>
-            </div>
             <div>
               <div style={{ position: "relative", width: 200, height: 300 }}>
                 <Image

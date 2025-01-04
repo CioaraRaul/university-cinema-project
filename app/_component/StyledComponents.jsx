@@ -69,6 +69,7 @@ export const StyledHomeDiv = styled.div`
   display: flex;
   justify-items: center;
   align-items: center;
+  flex-direction: row;
   gap: 1rem;
 `;
 

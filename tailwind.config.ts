@@ -20,7 +20,8 @@ export default {
       backgroundImage: {
         "create-account": "url('/loginBackground.jpg')",
         homepage: "url('/backgroundHome.jpg')",
-        witcher: "url('/home.jpg')",
+        witcher:
+          "url('https://images7.alphacoders.com/135/thumb-1920-1358613.jpeg')",
         fast9: "url('/fast9.jpg')",
         badboys: "url('/badboys.jpg')",
         chicago: "url('/chicago.jpg')",
