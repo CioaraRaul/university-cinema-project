@@ -1,5 +1,4 @@
 export type Movie = {
-  id?: number;
   cinemaId: number;
   title: string;
   genre: string;
@@ -8,6 +7,7 @@ export type Movie = {
   image: string;
   description: string;
   releaseDate: string;
+  ageMinimum: number;
 };
 
 export type PageProps = {

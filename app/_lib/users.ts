@@ -26,29 +26,3 @@ export default async function changePassword(
       console.error("Unexpected error:", error.message);
   }
 }
-
-export async function CreateUser(
-  email: string,
-  password: string,
-  username: string,
-  age: number
-) {
-  try {
-    const { data: UserData, error: UserError } = await supabase
-      .from("Users")
-      .insert([{ email, password, username, age }]);
-
-    if (UserError) {
-      throw new Error(`Error creating user: ${UserError.message}`);
-    }
-
-    console.log("User succesfully created");
-    return UserData;
-  } catch (err) {
-    if (err instanceof Error) {
-      console.error("Unexpected erorr: ", err.message);
-    } else {
-      console.error("Unexpected error:", err);
-    }
-  }
-}

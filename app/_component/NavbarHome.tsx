@@ -41,7 +41,7 @@ function NavbarHome({ image, username, password, email }: NavBarHomeProps) {
                 image || "default-profile-picture.png"
               }`}
             >
-              Series
+              Create
             </Link>
           </li>
           <li className="text-xl tracking-wide">

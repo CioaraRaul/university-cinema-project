@@ -25,6 +25,7 @@ export default {
         fast9: "url('/fast9.jpg')",
         badboys: "url('/badboys.jpg')",
         chicago: "url('/chicago.jpg')",
+        test: "url('/https://images.pexels.com/photos/1366957/pexels-photo-1366957.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')",
       },
       padding: {
         "1/2": "30vh",
