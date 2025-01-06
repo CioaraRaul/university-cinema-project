@@ -5,9 +5,12 @@ import { Movie } from "@/app/_component/Type";
 import { getMovies } from "@/app/_lib/cinema-service-data";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 export default function Movies() {
+  const route = useRouter();
+
   const [activeSection, setActiveSection] = useState<string>("");
   const [allMovies, setAllMovies] = useState<Movie[]>([]);
   const [newRealaseMovies, setNewRealeaseMovies] = useState<Movie[]>([]);
@@ -96,6 +99,10 @@ export default function Movies() {
     setActiveSection(hash); // Update the state manually
   };
 
+  const goToSpecificMovie = (movieId: number) => {
+    route.push(`/homepage/movies/${movieId}`);
+  };
+
   return (
     <div className="bg-gray-800 h-full grid grid-cols-[20%_80%]">
       <div>
@@ -156,7 +163,10 @@ export default function Movies() {
           <div className="grid grid-cols-5 gap-y-20 hover:cursor-pointer">
             {allMovies.length > 0 &&
               allMovies.map((movie) => (
-                <div key={movie.id}>
+                <div
+                  key={movie.cinemaId}
+                  onClick={() => goToSpecificMovie(movie.cinemaId)}
+                >
                   <div
                     style={{ position: "relative", width: 200, height: 300 }}
                   >
@@ -235,7 +245,7 @@ export default function Movies() {
           <div className="grid grid-cols-5 gap-y-12 hover:cursor-pointer">
             {newRealaseMovies.length > 0 &&
               newRealaseMovies.map((newMovieRealease) => (
-                <div key={newMovieRealease.id}>
+                <div key={newMovieRealease.cinemaId}>
                   <div
                     style={{ position: "relative", width: 200, height: 300 }}
                   >
@@ -285,7 +295,7 @@ export default function Movies() {
           <div className="grid grid-cols-5 gap-y-12">
             {highestRated.length > 0 &&
               highestRated.map((movie) => (
-                <div key={movie.id}>
+                <div key={movie.cinemaId}>
                   <div
                     style={{ position: "relative", width: 200, height: 300 }}
                   >
@@ -333,7 +343,7 @@ export default function Movies() {
           <div className="grid grid-cols-5 gap-y-12">
             {comingSoonMovies.length > 0 &&
               comingSoonMovies.map((movie) => (
-                <div key={movie.id}>
+                <div key={movie.cinemaId}>
                   <div
                     style={{ position: "relative", width: 200, height: 300 }}
                   >
@@ -424,7 +434,7 @@ export default function Movies() {
           <div className="grid grid-cols-5 gap-y-12">
             {filteredMovies.length > 0 &&
               filteredMovies.map((movie) => (
-                <div key={movie.id}>
+                <div key={movie.cinemaId}>
                   <div
                     style={{ position: "relative", width: 200, height: 300 }}
                   >
