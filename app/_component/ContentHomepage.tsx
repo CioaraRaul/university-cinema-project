@@ -1,13 +1,14 @@
 "use client";
 
-import Image from "next/image";
-import { StyledHomeDiv, StyledHomepageH3 } from "./StyledComponents";
-import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import { getMovies } from "../_lib/cinema-service-data";
 import { Movie } from "@/app/_component/Type";
 import ContentHomepageWait from "./ContentHomepageWait";
 import ContentHomepageLoadingData from "./ContentHomepageLoadingData";
+
+interface Props {
+  id: number;
+}
 
 function ContentHomepage() {
   const [movies, setMovies] = useState<Movie[]>([]);

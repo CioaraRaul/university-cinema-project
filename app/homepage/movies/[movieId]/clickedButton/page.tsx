@@ -1,5 +1,5 @@
 "use client";
-import GetDataMovieButton from "@/app/_component/GetDataMovieButton";
+import DeleteMovieId from "@/app/_component/DeleteMovieId";
 import { useParams } from "next/navigation";
 import React from "react";
 
@@ -13,8 +13,11 @@ export default function Page() {
   const cinemaId = parseInt(stringCinemaId, 10);
 
   return (
-    <div>
-      <GetDataMovieButton buttonIndex={cinemaId} />
+    <div className="relative h-[100vh]">
+      <div className="absolute inset-0 bg-slate-700 h-[100vh] opacity-90 "></div>
+      <div className="relative z-10 flex justify-center items-center h-[100vh]">
+        <DeleteMovieId id={cinemaId} />
+      </div>
     </div>
   );
 }

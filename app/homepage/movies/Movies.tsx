@@ -5,7 +5,7 @@ import { Movie } from "@/app/_component/Type";
 import { getMovies } from "@/app/_lib/cinema-service-data";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 export default function Movies() {
@@ -22,6 +22,9 @@ export default function Movies() {
   const monthDate = String(new Date().getMonth() + 1).padStart(2, "0");
   const dayDate = String(new Date().getDate()).padStart(2, "0");
   const currentDate = `${yearDate}-${monthDate}-${dayDate}`;
+
+  const searchParams = useSearchParams();
+  const userId = searchParams.get("userId");
 
   useEffect(() => {
     async function fetchMoveis() {
@@ -96,11 +99,11 @@ export default function Movies() {
   }, []);
 
   const handleLinkClick = (hash: string) => {
-    setActiveSection(hash); // Update the state manually
+    setActiveSection(hash);
   };
 
   const goToSpecificMovie = (movieId: number) => {
-    route.push(`/homepage/movies/${movieId}`);
+    route.push(`/homepage/movies/${movieId}?userId=${userId}`);
   };
 
   return (
@@ -108,7 +111,7 @@ export default function Movies() {
       <div>
         <div className="relative ">
           <Link
-            href={"/homepage"}
+            href={`../homepage?userId=${userId}`}
             className="flex items-center justify-center text-white bg-green-700 py-4 text-2xl tracking-widest"
           >
             FilmFussion

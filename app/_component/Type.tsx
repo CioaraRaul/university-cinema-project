@@ -10,6 +10,19 @@ export type Movie = {
   ageMinimum: number;
 };
 
+export type MyList = {
+  cinemaId: number;
+  title: string;
+  genre: string;
+  duration: number;
+  rating: number;
+  image: string;
+  description: string;
+  releaseDate: string;
+  ageMinimum: number;
+  myListAdd: boolean;
+};
+
 export type PageProps = {
   params: {
     id: number;
@@ -19,6 +32,7 @@ export type PageProps = {
 export type UserSignUP = {
   email?: string;
   password?: string;
+  id?: number;
 };
 
 export type Users = {
@@ -27,6 +41,7 @@ export type Users = {
   password?: string;
   username?: string;
   age?: number;
+  reviewd?: boolean;
 };
 
 export interface Approve {
@@ -35,3 +50,8 @@ export interface Approve {
   approveUsername: boolean;
   approveAge: boolean;
 }
+
+export type UserReview = {
+  id: number;
+  username: string;
+};

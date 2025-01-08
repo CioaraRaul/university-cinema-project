@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { getMovieData } from "../_lib/cinema-service-data";
 import Image from "next/image";
-import AlertPopup from "./AlertPopupProps";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 
 // Define types for props and movie data
 interface Props {
@@ -29,11 +29,14 @@ function GetDataMovieById({ id, onButtonClick }: Props) {
   const [movie, setMovie] = useState<Movie | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const route = useRouter();
+
+  const searchParams = useSearchParams();
+  const userId = searchParams.get("userId");
 
   useEffect(() => {
     const fetchMovie = async () => {
       try {
-        console.log("Fetching movie with ID:", id);
         const info_movie = await getMovieData(id).then((data) =>
           data ? data[0] : null
         );
@@ -64,8 +67,15 @@ function GetDataMovieById({ id, onButtonClick }: Props) {
 
   if (!movie) return <p>This movie doesnt appear in the database</p>;
 
-  const buttonClicked = (numberButton: number | null) => {
+  const buttonClicked = (
+    numberButton: number | null,
+    path: string | undefined
+  ) => {
     onButtonClick(numberButton);
+    route.push(`${id}/${path}/?userId=${userId}`);
+  };
+  const goBack = () => {
+    route.push(`./?userId=${userId}`);
   };
 
   return (
@@ -129,7 +139,7 @@ function GetDataMovieById({ id, onButtonClick }: Props) {
           Add to my list
         </button>
         <Link
-          href={`${movie.cinemaId}/clickedButton`}
+          href={`${movie.cinemaId}/clickedButton?userId=${userId}`}
           className=" text-gray-50 text-xl px-6 py-4 bg-green-600 rounded-lg transition-all duration-300
           hover:scale-105"
         >
@@ -138,7 +148,7 @@ function GetDataMovieById({ id, onButtonClick }: Props) {
         <button
           className=" text-gray-50 text-xl px-12 py-4 bg-green-600 rounded-lg transition-all duration-300
           hover:scale-105"
-          onClick={() => buttonClicked(3)}
+          onClick={() => buttonClicked(3, "review")}
         >
           Review
         </button>
@@ -148,6 +158,13 @@ function GetDataMovieById({ id, onButtonClick }: Props) {
           onClick={() => buttonClicked(null)}
         >
           Clear
+        </button>
+        <button
+          className=" text-gray-50 text-xl px-14 py-4 bg-green-600 rounded-lg transition-all duration-300
+          hover:scale-105"
+          onClick={goBack}
+        >
+          Back
         </button>
       </div>
     </div>

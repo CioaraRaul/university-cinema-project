@@ -5,16 +5,25 @@ import SearchBar from "./SearchBar";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 interface NavBarHomeProps {
   image?: string;
   username?: string;
   password?: string;
   email?: string;
+  id?: number;
 }
 
-function NavbarHome({ image, username, password, email }: NavBarHomeProps) {
+function NavbarHome({ image, username, password, email, id }: NavBarHomeProps) {
   const dropDownRef = useRef<HTMLDivElement | null>(null);
+
+  const searchParams = useSearchParams();
+  const userId = searchParams.get("userId");
+
+  const createLinkWithUserId = (path: string) => {
+    return userId ? `homepage/${path}?userId=${userId}` : path;
+  };
 
   return (
     <div className="relative z-10 flex justify-around items-center pt-6">
@@ -24,34 +33,16 @@ function NavbarHome({ image, username, password, email }: NavBarHomeProps) {
             FilmFussion
           </li>
           <li className="text-xl tracking-wide">
-            <Link href={"/homepage"}>Home</Link>
+            <Link href={createLinkWithUserId("/")}>Home</Link>
           </li>
           <li className="text-xl tracking-wide">
-            <Link
-              href={`/homepage/movies?username=${username}&email=${email}&password=${password}&image=${
-                image || "default-profile-picture.png"
-              }`}
-            >
-              Movies
-            </Link>
+            <Link href={createLinkWithUserId("/movies")}>Movies</Link>
           </li>
           <li className="text-xl tracking-wide">
-            <Link
-              href={`/homepage/series?username=${username}&email=${email}&password=${password}&image=${
-                image || "default-profile-picture.png"
-              }`}
-            >
-              Create
-            </Link>
+            <Link href={createLinkWithUserId("/create")}>Create</Link>
           </li>
           <li className="text-xl tracking-wide">
-            <Link
-              href={`/homepage/mylist?username=${username}&email=${email}&password=${password}&image=${
-                image || "default-profile-picture.png"
-              }`}
-            >
-              My List
-            </Link>
+            <Link href={createLinkWithUserId("/mylist")}>My List</Link>
           </li>
         </ul>
       </div>

@@ -47,14 +47,14 @@ export default function SignUp() {
     const password = passwordRef.current?.value;
 
     const userFound = users.find((user) => {
-      console.log(user, email, password);
       return user.email === email && user.password === password;
     });
 
     if (userFound && inputState) {
+      // console.log(userFound.id);
       setValid(true);
       setError(null); // Clear error
-      router.push("/homepage");
+      router.push(`/homepage?userId=${userFound.id}`);
     } else {
       setValid(false);
       // if (error) {

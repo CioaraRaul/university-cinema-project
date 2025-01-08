@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useRef } from "react";
 import { createMovie } from "@/app/_lib/movie";
 
@@ -16,8 +16,11 @@ export default function CreateMovie() {
 
   const route = useRouter();
 
+  const searchParams = useSearchParams();
+  const userId = searchParams.get("userId");
+
   const goToHomepage = () => {
-    route.push("/homepage");
+    route.push(`../homepage?userId=${userId}`);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
