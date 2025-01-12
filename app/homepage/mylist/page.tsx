@@ -51,7 +51,7 @@ export default function Page() {
 
       <div
         className={`relative z-10 ${
-          myList && myList.length > 4 ? "h-auto overflow-hidden" : "h-[100vh]"
+          myList && myList.length > 5 ? "h-auto overflow-hidden" : "h-[100vh]"
         }`}
       >
         <div>

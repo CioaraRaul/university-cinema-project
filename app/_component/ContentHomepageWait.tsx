@@ -5,6 +5,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { StyledHomeDiv, StyledHomepageH3 } from "./StyledComponents";
 import { Movie } from "./Type";
+import { ChangeMovieData } from "../_lib/cinema-service-data";
 
 interface ContentHomepageWaitProps {
   movies: Movie[] | Promise<Movie[]>; // Handle both cases (array or async data)
@@ -16,6 +17,11 @@ export default function ContentHomepageWait({
   joker,
 }: ContentHomepageWaitProps) {
   const [twoMovies, setTwoMovies] = useState<Movie[]>([]);
+  const [update, setUpdate] = useState<Movie | undefined>(joker);
+
+  useEffect(() => {
+    console.log(update);
+  }, [update]);
 
   useEffect(() => {
     async function takeMovies() {
@@ -30,6 +36,77 @@ export default function ContentHomepageWait({
 
     takeMovies();
   }, [movies]);
+
+  const myUnlistButton = async (cinemaId: number | undefined) => {
+    if (!cinemaId) {
+      console.error("Cinema ID is undefined");
+      return;
+    }
+
+    const updated = await ChangeMovieData({
+      cinemaId,
+      myListAdd: false,
+    });
+
+    if (updated) {
+      // Update local joker state
+      setUpdate((prev) => (prev ? { ...prev, myListAdd: false } : undefined));
+      console.log("Update Result:", updated);
+      window.location.reload();
+    }
+  };
+
+  const myUnlistButtonSecond = async (cinemaId: number) => {
+    console.log(cinemaId);
+
+    const { data, success } = await ChangeMovieData({
+      cinemaId,
+      myListAdd: false,
+    });
+    if (success) {
+      // Update the specific movie in `twoMovies`
+      setTwoMovies((prev) =>
+        prev.map((movie) =>
+          movie.cinemaId === cinemaId ? { ...movie, myListAdd: false } : movie
+        )
+      );
+    }
+  };
+  const myListButtonSecond = async (cinemaId: number) => {
+    console.log(cinemaId);
+
+    const { data, success } = await ChangeMovieData({
+      cinemaId,
+      myListAdd: true,
+    });
+    if (success) {
+      // Update the specific movie in `twoMovies`
+      setTwoMovies((prev) =>
+        prev.map((movie) =>
+          movie.cinemaId === cinemaId ? { ...movie, myListAdd: true } : movie
+        )
+      );
+    }
+  };
+  const myListButton = async (cinemaId: number | undefined) => {
+    if (!cinemaId) {
+      console.error("Cinema ID is undefined");
+      return;
+    }
+
+    const { data, success } = await ChangeMovieData({
+      cinemaId,
+      myListAdd: true,
+    });
+    console.log(success);
+    if (success) {
+      // Update local joker state
+
+      setUpdate((prev) => (prev ? { ...prev, myListAdd: true } : undefined));
+      console.log("Update Result:", data);
+      window.location.reload();
+    }
+  };
 
   return (
     <div className="relative z-10 flex justify-center items-center flex-grow">
@@ -91,17 +168,38 @@ export default function ContentHomepageWait({
           >
             Show more
           </Link>
-          <button className="transition-all duration-300 bg-green-400 py-4 px-6 rounded-xl text-black flex items-center justify-center gap-2 hover:cursor-pointer hover:scale-105">
-            <span>
-              <Image
-                src="/plus-symbol-button.png"
-                width={12}
-                height={12}
-                alt="plus button"
-              />
-            </span>
-            <p>Add to list</p>
-          </button>
+          {joker?.myListAdd && (
+            <button
+              className="transition-all duration-300 bg-green-400 py-4 px-6 rounded-xl text-black flex items-center justify-center gap-2 hover:cursor-pointer hover:scale-105"
+              onClick={() => myUnlistButton(joker?.cinemaId)}
+            >
+              <span>
+                <Image
+                  src="/plus-symbol-button.png"
+                  width={12}
+                  height={12}
+                  alt="plus button"
+                />
+              </span>
+              <p>Unlist</p>
+            </button>
+          )}
+          {!joker?.myListAdd && (
+            <button
+              className="transition-all duration-300 bg-green-400 py-4 px-6 rounded-xl text-black flex items-center justify-center gap-2 hover:cursor-pointer hover:scale-105"
+              onClick={() => myListButton(joker?.cinemaId)}
+            >
+              <span>
+                <Image
+                  src="/plus-symbol-button.png"
+                  width={12}
+                  height={12}
+                  alt="plus button"
+                />
+              </span>
+              <p>Add to list</p>
+            </button>
+          )}
         </div>
       </div>
 
@@ -130,21 +228,46 @@ export default function ContentHomepageWait({
                     >
                       Show more
                     </Link>
-                    <button className="transition-all duration-300 bg-green-400 py-3 px-3 text-sm rounded-xl text-black flex items-center justify-center gap-2 hover:cursor-pointer hover:scale-105">
-                      <span>
-                        <Image
-                          src="/plus-symbol-button.png"
-                          width={12}
-                          height={12}
-                          alt="plus button"
-                          style={{
-                            filter:
-                              "invert(1) sepia(1) saturate(1000%) hue-rotate(100deg)",
-                          }}
-                        />
-                      </span>
-                      Add to list
-                    </button>
+                    {!movie.myListAdd && (
+                      <button
+                        className="transition-all duration-300 bg-green-400 py-3 px-3 text-sm rounded-xl text-black flex items-center justify-center gap-2 hover:cursor-pointer hover:scale-105"
+                        onClick={() => myListButtonSecond(movie?.cinemaId)}
+                      >
+                        <span>
+                          <Image
+                            src="/plus-symbol-button.png"
+                            width={12}
+                            height={12}
+                            alt="plus button"
+                            style={{
+                              filter:
+                                "invert(1) sepia(1) saturate(1000%) hue-rotate(100deg)",
+                            }}
+                          />
+                        </span>
+                        Add to list
+                      </button>
+                    )}
+                    {movie.myListAdd && (
+                      <button
+                        className="transition-all duration-300 bg-green-400 py-3 px-3 text-sm rounded-xl text-black flex items-center justify-center gap-2 hover:cursor-pointer hover:scale-105"
+                        onClick={() => myUnlistButtonSecond(movie?.cinemaId)}
+                      >
+                        <span>
+                          <Image
+                            src="/plus-symbol-button.png"
+                            width={12}
+                            height={12}
+                            alt="plus button"
+                            style={{
+                              filter:
+                                "invert(1) sepia(1) saturate(1000%) hue-rotate(100deg)",
+                            }}
+                          />
+                        </span>
+                        Unlist
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

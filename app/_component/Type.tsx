@@ -8,6 +8,7 @@ export type Movie = {
   description: string;
   releaseDate: string;
   ageMinimum: number;
+  myListAdd: boolean;
 };
 
 export type MyList = {
@@ -54,4 +55,12 @@ export interface Approve {
 export type UserReview = {
   id: number;
   username: string;
+};
+
+export type Review = {
+  review_id: number;
+  user_id: number;
+  movie_id: number;
+  review: string;
+  created_at: string;
 };

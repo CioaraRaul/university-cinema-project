@@ -152,13 +152,13 @@ function GetDataMovieById({ id, onButtonClick }: Props) {
         >
           Review
         </button>
-        <button
+        {/* <button
           className=" text-gray-50 text-xl px-14 py-4 bg-green-600 rounded-lg transition-all duration-300
           hover:scale-105"
           onClick={() => buttonClicked(null)}
         >
           Clear
-        </button>
+        </button> */}
         <button
           className=" text-gray-50 text-xl px-14 py-4 bg-green-600 rounded-lg transition-all duration-300
           hover:scale-105"

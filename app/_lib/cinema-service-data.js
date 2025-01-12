@@ -28,10 +28,42 @@ export async function getMovieData(id) {
     throw new Error(err.message);
   }
 }
+export async function getUserData(id) {
+  try {
+    const { data, error } = await supabase
+      .from("Users")
+      .select("*")
+      .eq("id", id);
+
+    if (error) {
+      console.error("Error fetching cinemaId data:", error.message);
+      return null;
+    }
+
+    return data;
+  } catch (err) {
+    console.error("Error:", err.message);
+    throw new Error(err.message);
+  }
+}
 
 export async function getMovies() {
   try {
     const { data, error } = await supabase.from("Movies").select("*");
+
+    if (error) {
+      throw new Error({ message: error.message });
+    }
+
+    return data;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+export async function getReviews() {
+  try {
+    const { data, error } = await supabase.from("Review").select("*");
 
     if (error) {
       throw new Error({ message: error.message });
@@ -83,29 +115,32 @@ export async function ChangeMovieData(movieData) {
 
     const fieldsToUpdate = Object.fromEntries(
       Object.entries(updatedData).filter(
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        ([_, value]) => value !== null && value !== ""
+        ([_, value]) => value !== null && value !== "" // Skip null or empty values
       )
     );
 
+    if (!cinemaId) {
+      throw new Error("Cinema ID is required.");
+    }
+
     if (Object.keys(fieldsToUpdate).length === 0) {
-      throw new Error("No changes");
+      throw new Error("No changes to update.");
     }
 
     const { data, error } = await supabase
       .from("Movies")
       .update(fieldsToUpdate)
-      .eq("cinemaId", cinemaId);
+      .eq("cinemaId", cinemaId)
+      .select("*");
 
-    if (!data) {
-      throw new Error(error);
-    }
+    console.log("Supabase Response:", JSON.stringify(data, null, 2));
+
     if (error) {
-      console.error(error.message);
+      throw new Error(error.message);
     }
-
-    return data;
+    return { data, success: true };
   } catch (err) {
-    console.error({ message: err });
+    console.error("Error updating movie data:", err);
+    throw err;
   }
 }
