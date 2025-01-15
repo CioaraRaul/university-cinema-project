@@ -128,7 +128,9 @@ export default function Review() {
           <div className="px-6">
             {allReviews.map((review) => (
               <div key={review.review_id}>
-                <p>User with id of:{review.user_id}</p>
+                <p>
+                  User with id of:{review.user_id} commented: {review.review}
+                </p>
               </div>
             ))}
           </div>

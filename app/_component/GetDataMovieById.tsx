@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getMovieData } from "../_lib/cinema-service-data";
+import { ChangeMovieData, getMovieData } from "../_lib/cinema-service-data";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -13,7 +13,7 @@ interface Props {
 }
 
 interface Movie {
-  cinemaId: string;
+  cinemaId: number;
   title: string;
   genre: string;
   duration: number;
@@ -23,6 +23,7 @@ interface Movie {
   description: string;
   releaseDate: string;
   ageMinimumReq: number;
+  myListAdd?: boolean;
 }
 
 function GetDataMovieById({ id, onButtonClick }: Props) {
@@ -78,6 +79,44 @@ function GetDataMovieById({ id, onButtonClick }: Props) {
     route.push(`./?userId=${userId}`);
   };
 
+  const myListButton = async (cinemaId: number | undefined) => {
+    if (!cinemaId) {
+      console.error("Cinema ID is undefined");
+      return;
+    }
+
+    const { data, success } = await ChangeMovieData({
+      cinemaId,
+      myListAdd: true,
+    });
+    console.log(success);
+    if (success) {
+      // Update local joker state
+
+      // setUpdate((prev) => (prev ? { ...prev, myListAdd: true } : undefined));
+      console.log("Update Result:", data);
+      window.location.reload();
+    }
+  };
+  const myUnlistButton = async (cinemaId: number | undefined) => {
+    if (!cinemaId) {
+      console.error("Cinema ID is undefined");
+      return;
+    }
+
+    const updated = await ChangeMovieData({
+      cinemaId,
+      myListAdd: false,
+    });
+
+    if (updated) {
+      // Update local joker state
+      // setUpdate((prev) => (prev ? { ...prev, myListAdd: false } : undefined));
+      console.log("Update Result:", updated);
+      window.location.reload();
+    }
+  };
+
   return (
     <div className="relative h-2/3 w-3/4 flex items-center justify-center gap-6">
       <div className="relative h-full w-4/12">
@@ -124,20 +163,32 @@ function GetDataMovieById({ id, onButtonClick }: Props) {
         </p>
       </div>
       <div className="relative h-full w-2/12 flex flex-col gap-6 items-center justify-center">
-        <button
+        <Link
+          href={`${movie.cinemaId}/buyTicket?userId=${userId}`}
           className=" text-gray-50 text-xl px-10 py-4 bg-green-600 rounded-lg transition-all duration-300
           hover:scale-105"
           onClick={() => buttonClicked(0)}
         >
           Buy ticket
-        </button>
-        <button
-          className=" text-gray-50 text-xl px-6 py-4 bg-green-600 rounded-lg transition-all duration-300
+        </Link>
+        {!movie.myListAdd && (
+          <button
+            className=" text-gray-50 text-xl px-6 py-4 bg-green-600 rounded-lg transition-all duration-300
           hover:scale-105"
-          onClick={() => buttonClicked(1)}
-        >
-          Add to my list
-        </button>
+            onClick={() => myListButton(movie?.cinemaId)}
+          >
+            Add to my list
+          </button>
+        )}
+        {movie.myListAdd && (
+          <button
+            className=" text-gray-50 text-xl px-14 py-4 bg-green-600 rounded-lg transition-all duration-300
+          hover:scale-105"
+            onClick={() => myUnlistButton(movie?.cinemaId)}
+          >
+            Unlist
+          </button>
+        )}
         <Link
           href={`${movie.cinemaId}/clickedButton?userId=${userId}`}
           className=" text-gray-50 text-xl px-6 py-4 bg-green-600 rounded-lg transition-all duration-300

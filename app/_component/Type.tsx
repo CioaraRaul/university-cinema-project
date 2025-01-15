@@ -9,6 +9,7 @@ export type Movie = {
   releaseDate: string;
   ageMinimum: number;
   myListAdd: boolean;
+  view: string;
 };
 
 export type MyList = {

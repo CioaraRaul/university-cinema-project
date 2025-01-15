@@ -26,7 +26,7 @@ function NavbarHome({ image, username, password, email, id }: NavBarHomeProps) {
   };
 
   return (
-    <div className="relative z-10 flex justify-around items-center pt-6">
+    <div className="relative z-100 flex justify-around items-center pt-6">
       <div>
         <ul className="text-white flex items-center gap-12">
           <li className="text-3xl tracking-wider text-green-400">
