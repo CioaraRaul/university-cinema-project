@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { CreateUser } from "../_lib/users";
+import { createUser } from "../_lib/users";
 import { Approve } from "../_component/Type";
 import { getUsers } from "../_lib/cinema-service-data";
 
@@ -179,7 +179,8 @@ export default function Page() {
           approve[0].approvePassword &&
           approve[0].approveUsername
         ) {
-          await CreateUser(email, password, username, parseInt(age));
+          await createUser(email, password, username, parseInt(age));
+
           router.push("/homepage");
         }
       }

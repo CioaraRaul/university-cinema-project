@@ -71,3 +71,38 @@ export async function createReview(
     }
   }
 }
+export async function createUser(
+  email: string,
+  password: string,
+  username: string,
+  age: number
+) {
+  try {
+    // Direct insertion without fetching the max ID
+    const { data, error } = await supabase
+      .from("Users")
+      .insert([
+        {
+          email,
+          password,
+          username,
+          age,
+          reviewd: false,
+        },
+      ])
+      .select();
+
+    if (error) {
+      throw new Error(`Error creating user: ${error.message}`);
+    }
+
+    console.log("User added successfully:", data);
+    return data; // Returns the inserted data
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error("Unexpected error:", err.message);
+    } else {
+      console.error("Unexpected error:", err);
+    }
+  }
+}
