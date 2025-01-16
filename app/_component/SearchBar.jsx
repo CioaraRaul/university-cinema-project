@@ -75,10 +75,7 @@ export default function SearchBar() {
 
       {/* Dropdown for Movie Results */}
       {query && movies.length > 0 && (
-        <div
-          key={Math.random() * 100}
-          className="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-[1010] max-h-96 overflow-y-auto mt-2"
-        >
+        <div className="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-[1010] max-h-96 overflow-y-auto mt-2">
           {movies.map((movie) => (
             <div
               key={movie.id}

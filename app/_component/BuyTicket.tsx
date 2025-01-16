@@ -18,14 +18,12 @@ export default function BuyTicket() {
 
   const [movie, setMovie] = useState<Movie[]>([]);
   const [selectedHour, setSelectedHour] = useState<string>("10:50");
-  const [cinemaSeating, setCinemaSeating] = useState<
-    Record<string, PlaceCinema | null>
-  >({
-    "10:50": null,
-    "14:55": null,
-    "19:40": null,
-    "22:40": null,
-    "23:00": null,
+  const [tableData, setTableData] = useState<Record<string, PlaceCinema[]>>({
+    "10:50": [],
+    "14:55": [],
+    "19:40": [],
+    "22:40": [],
+    "23:00": [],
   });
 
   useEffect(() => {
@@ -36,7 +34,7 @@ export default function BuyTicket() {
           setMovie(data);
         }
         if (!data) {
-          console.log("no movie");
+          console.log("No movie found.");
         }
       } catch (err) {
         if (err instanceof Error) {
@@ -52,13 +50,11 @@ export default function BuyTicket() {
   };
 
   const handleSeatSelection = (row: number, col: number) => {
-    setCinemaSeating((prev) => ({
+    setTableData((prev) => ({
       ...prev,
-      [selectedHour]: { row, place: col, price: 25 }, // Price is fixed for now
+      [selectedHour]: [...prev[selectedHour], { row, place: col, price: 25 }],
     }));
   };
-
-  const currentSelection = cinemaSeating[selectedHour];
 
   return (
     <div className="relative h-full">
@@ -90,19 +86,17 @@ export default function BuyTicket() {
 
         <div className="px-12 py-12 bg-slate-900">
           <h1 className="text-2xl mb-4">Choose a place</h1>
-          <div className="flex gap-16 mb-4">
-            <div className="flex items-center gap-2">
-              <h3>Row:</h3>
-              <h2>{currentSelection?.row || "N/A"}</h2>
-            </div>
-            <div className="flex items-center gap-2">
-              <h3>Placement:</h3>
-              <h2>{currentSelection?.place || "N/A"}</h2>
-            </div>
-            <div className="flex items-center gap-2">
-              <h3>Price:</h3>
-              <h2>{currentSelection?.price || "N/A"}</h2>
-            </div>
+
+          {/* Selected Seats for Current Hour */}
+          <div className="mb-6">
+            <h2 className="text-xl">Selected Seats for {selectedHour}:</h2>
+            <ul className="list-disc pl-6 text-lg">
+              {tableData[selectedHour].map((seat, index) => (
+                <li key={index}>
+                  Row: {seat.row}, Place: {seat.place}, Price: ${seat.price}
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Cinema Seating Grid */}
@@ -113,8 +107,9 @@ export default function BuyTicket() {
                   <button
                     key={`${row}-${col}`}
                     className={`w-12 h-12 bg-gray-800 hover:bg-green-500 ${
-                      currentSelection?.row === row + 1 &&
-                      currentSelection?.place === col + 1
+                      tableData[selectedHour].some(
+                        (seat) => seat.row === row + 1 && seat.place === col + 1
+                      )
                         ? "bg-green-600"
                         : ""
                     }`}
@@ -152,6 +147,7 @@ export default function BuyTicket() {
               height={28}
               width={28}
               alt="cart"
+              onClick={() => console.log(tableData)}
             />
           </button>
         </div>

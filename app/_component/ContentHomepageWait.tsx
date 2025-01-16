@@ -6,9 +6,11 @@ import React, { useEffect, useState } from "react";
 import { StyledHomeDiv, StyledHomepageH3 } from "./StyledComponents";
 import { Movie } from "./Type";
 import { ChangeMovieData } from "../_lib/cinema-service-data";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface ContentHomepageWaitProps {
-  movies: Movie[] | Promise<Movie[]>; // Handle both cases (array or async data)
+  movies: Movie[] | Promise<Movie[]>;
   joker: Movie | undefined;
 }
 
@@ -18,6 +20,11 @@ export default function ContentHomepageWait({
 }: ContentHomepageWaitProps) {
   const [twoMovies, setTwoMovies] = useState<Movie[]>([]);
   const [update, setUpdate] = useState<Movie | undefined>(joker);
+
+  const searchParams = useSearchParams();
+  const userId = searchParams.get("userId");
+
+  const route = useRouter();
 
   useEffect(() => {
     console.log(update);
@@ -108,6 +115,10 @@ export default function ContentHomepageWait({
     }
   };
 
+  const showMovieDoc = (movieId: number | undefined) => {
+    route.push(`homepage/movies/${movieId}?userId=${userId}`);
+  };
+
   return (
     <div className="relative z-10 flex justify-center items-center flex-grow">
       <div className="w-5/6 px-14">
@@ -162,12 +173,12 @@ export default function ContentHomepageWait({
           </p>
         </div>
         <div className="flex items-center justify-start gap-6 mt-6">
-          <Link
+          <button
             className="transition-all duration-300 text-black bg-white py-4 px-6 rounded-xl hover:cursor-pointer hover:scale-105"
-            href="/"
+            onClick={() => showMovieDoc(joker?.cinemaId)}
           >
             Show more
-          </Link>
+          </button>
           {joker?.myListAdd && (
             <button
               className="transition-all duration-300 bg-green-400 py-4 px-6 rounded-xl text-black flex items-center justify-center gap-2 hover:cursor-pointer hover:scale-105"
@@ -222,12 +233,12 @@ export default function ContentHomepageWait({
                     {movie.description || "No description available."}
                   </p>
                   <div className="flex items-center gap-6">
-                    <Link
+                    <button
                       className="transition-all duration-300 text-black bg-white py-3 px-3 text-sm rounded-xl hover:cursor-pointer hover:scale-105"
-                      href="/"
+                      onClick={() => showMovieDoc(movie.cinemaId)}
                     >
                       Show more
-                    </Link>
+                    </button>
                     {!movie.myListAdd && (
                       <button
                         className="transition-all duration-300 bg-green-400 py-3 px-3 text-sm rounded-xl text-black flex items-center justify-center gap-2 hover:cursor-pointer hover:scale-105"
